@@ -22,7 +22,6 @@ public final class MapsActivity extends FragmentActivity implements OnMapReadyCa
         mapFragment.getMapAsync(this);
     }
 
-
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
