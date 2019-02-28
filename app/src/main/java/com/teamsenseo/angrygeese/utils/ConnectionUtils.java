@@ -6,6 +6,7 @@ import java.net.URL;
 
 /**
  * Useful things for connecting to websites
+ *
  * @author Robert
  */
 public final class ConnectionUtils {
