@@ -5,4 +5,5 @@
     <string name="total_cm">Totaal aantal cm: </string>
     <string name="dg_price">Prijs per kg drogestof: </string>
     <string name="submit_button"><b>Verzenden</b></string>
+    <string name="maps"><b>Google maps pagina</b></string>
 </resources>
