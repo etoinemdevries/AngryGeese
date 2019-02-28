@@ -4,14 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
     <Button
         android:id="@+id/button"
         android:layout_width="match_parent"
         android:layout_height="62dp"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="0dp"
-        android:text="Button" />
+        android:text="@string/submit_button" />
 
     <TextView
         android:id="@+id/textView"
@@ -30,7 +29,7 @@
         android:layout_marginRight="127dp"
         android:layout_marginBottom="530dp"
         android:ems="10"
-        android:text="Aantal hectare:"
+        android:text="@string/hectare"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
     <TextView
@@ -50,7 +49,7 @@
         android:layout_marginRight="54dp"
         android:layout_marginBottom="101dp"
         android:ems="10"
-        android:text="Totaal aantal cm:"
+        android:text="@string/total_cm"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
     <TextView
@@ -68,7 +67,7 @@
         android:layout_marginRight="57dp"
         android:layout_marginBottom="258dp"
         android:ems="10"
-        android:text="Prijs per kg drogestof:"
+        android:text="@string/dg_price"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
     <EditText
@@ -89,7 +88,8 @@
         android:layout_marginBottom="472dp"
         android:ems="10"
         android:inputType="number"
-        android:text="8" />
+        android:text="8"
+        android:importantForAutofill="no" />
 
     <EditText
         android:id="@+id/editText8"
@@ -109,7 +109,8 @@
         android:layout_marginBottom="342dp"
         android:ems="10"
         android:inputType="number"
-        android:text="10 cm" />
+        android:text="10 cm"
+        android:importantForAutofill="no" />
 
     <EditText
         android:id="@+id/editText9"
@@ -129,5 +130,7 @@
         android:layout_marginBottom="199dp"
         android:ems="10"
         android:inputType="number"
-        android:text="$ 4.50" />
+        android:text="$ 4.50"
+        android:importantForAutofill="no" />
+
 </RelativeLayout>
