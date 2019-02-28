@@ -11,16 +11,23 @@ import com.google.android.gms.maps.SupportMapFragment;
 
 /**
  * Main Angry Geese class
+ *
  * @author Robert
  */
 public final class AngryGeese extends FragmentActivity implements OnMapReadyCallback {
-    /** Angry Geese instance */
+    /**
+     * Angry Geese instance
+     */
     public static AngryGeese instance;
 
-    /** Gets the application instance */
+    /**
+     * Gets the application instance
+     */
     public final Application app;
 
-    /** Google map */
+    /**
+     * Google map
+     */
     private GoogleMap map;
 
     protected AngryGeese() {
@@ -51,7 +58,9 @@ public final class AngryGeese extends FragmentActivity implements OnMapReadyCall
         this.map = map;
     }
 
-    /** Gets the google map */
+    /**
+     * Gets the google map
+     */
     public final GoogleMap getMap() {
         return this.map;
     }
