@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+
 import com.teamsenseo.angrygeese.R;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -36,7 +37,9 @@ public final class SecondActivity extends AppCompatActivity {
         });
     }
 
-    /** Log the user out */
+    /**
+     * Log the user out
+     */
     private final void Logout() {
         this.firebaseAuth.signOut();
         finish();
@@ -52,7 +55,7 @@ public final class SecondActivity extends AppCompatActivity {
 
     @Override
     public final boolean onOptionsItemSelected(final MenuItem item) {
-        switch(item.getItemId()) {
+        switch (item.getItemId()) {
             case R.id.logoutMenu:
                 Logout();
                 break;
