@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.teamsenseo.angrygeese.R;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -18,74 +19,89 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+/**
+ * Login screen
+ *
+ * @author Gago
+ */
 public class MainActivity extends AppCompatActivity {
-
-    private EditText Name;
-    private EditText Password;
-    private TextView Info;
-    private Button Login;
-    private int counter = 5;
-    private TextView userRegistration;
-    private FirebaseAuth firebaseAuth;
+    private TextView info, userRegistration;
     private ProgressDialog progressDialog;
+    private FirebaseAuth firebaseAuth;
+    private EditText name, password;
+    private int counter = 5;
+    private Button login;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected final void onCreate(final Bundle bundle) {
+        super.onCreate(bundle);
         setContentView(R.layout.activity_main);
 
-        Name = (EditText)findViewById(R.id.etName);
-        Password = (EditText)findViewById(R.id.etPassword);
-        Info = (TextView)findViewById(R.id.tvInfo);
-        Login = (Button)findViewById(R.id.btnLogin);
-        userRegistration = (TextView)findViewById(R.id.tvRegister);
+        this.name = findViewById(R.id.etName);
+        this.password = findViewById(R.id.etPassword);
+        this.info = findViewById(R.id.tvInfo);
+        this.login = findViewById(R.id.btnLogin);
+        this.userRegistration = findViewById(R.id.tvRegister);
+        this.info.setText("No of attempts remaining: 5");
 
-        Info.setText("No of attempts remaining: 5");
+        this.firebaseAuth = FirebaseAuth.getInstance();
+        this.progressDialog = new ProgressDialog(this);
+        final FirebaseUser user = firebaseAuth.getCurrentUser();
 
-        firebaseAuth = FirebaseAuth.getInstance();
-        progressDialog = new ProgressDialog(this);
-
-        FirebaseUser user = firebaseAuth.getCurrentUser();
-
-        if(user != null) {
+        if (user != null) {
             finish();
             startActivity(new Intent(MainActivity.this, SecondActivity.class));
         }
 
-        Login.setOnClickListener(new View.OnClickListener() {
+        this.login.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                validate(Name.getText().toString(), Password.getText().toString());
+            public final void onClick(final View view) {
+                validate(name.getText().toString(), password.getText().toString());
             }
         });
 
-        userRegistration.setOnClickListener(new View.OnClickListener() {
+        this.userRegistration.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public final void onClick(final View view) {
                 startActivity(new Intent(MainActivity.this, RegistrationActivity.class));
             }
         });
     }
 
-    private void validate(String userName, String userPassword){
-
+    /** Attempts to log in */
+    private final void validate(final String name, final String password) {
         progressDialog.setMessage("ProgressDialog");
         progressDialog.show();
 
-        firebaseAuth.signInWithEmailAndPassword(userName, userPassword). addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        firebaseAuth.signInWithEmailAndPassword(name, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()) {
+            public final void onComplete(final @NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
                     progressDialog.dismiss();
                     Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
                     startActivity(new Intent(MainActivity.this, SecondActivity.class));
-                }else {
+                } else {
                     Toast.makeText(MainActivity.this, "Login Failed", Toast.LENGTH_LONG).show();
-                    counter--;
-                    Info.setText("Attempt:" + counter);
+
+                    info.setText("Attempt: " + counter);
                     progressDialog.dismiss();
-                    if(counter == 0) {
-                        Login.setEnabled(false);
+
+                    if (counter-- == 0) {
+                        login.setEnabled(false);
+
+                        new Thread(new Runnable() {
+                            @Override
+                            public final void run() {
+                                try {
+                                    Thread.sleep(5000L);
+                                } catch (final Exception e) {
+                                    System.out.println("Failed to sleep");
+                                    e.printStackTrace();
+                                }
+
+                                login.setEnabled(true);
+                            }
+                        }).run();
                     }
                 }
             }

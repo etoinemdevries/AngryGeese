@@ -1,4 +1,5 @@
 package com.teamsenseo.angrygeese.activities;
+
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.teamsenseo.angrygeese.R;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -15,72 +17,72 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class RegistrationActivity extends AppCompatActivity {
-    private EditText userName, userPassword, userEmail;
-    private Button regButton;
-    private TextView userLogin;
+/**
+ * Register screen
+ *
+ * @author Gago
+ */
+public final class RegistrationActivity extends AppCompatActivity {
+    private EditText name, password, email;
     private FirebaseAuth firebaseAuth;
-
+    private TextView userLogin;
+    private Button regButton;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected final void onCreate(final Bundle bundle) {
+        super.onCreate(bundle);
         setContentView(R.layout.activity_registration);
-        setupUIViews();
 
-        firebaseAuth = FirebaseAuth.getInstance();
+        /* Set up interface components */
+        this.name = findViewById(R.id.etUserName);
+        this.password = findViewById(R.id.etUserPassword);
+        this.email = findViewById(R.id.etUserEmail);
+        this.regButton = findViewById(R.id.btnRegister);
+        this.userLogin = findViewById(R.id.tvUserLogin);
+        this.firebaseAuth = FirebaseAuth.getInstance();
 
-        regButton.setOnClickListener(new View.OnClickListener() {
+        this.regButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View View) {
+            public final void onClick(final View View) {
                 if (validate()) {
-                    //upload to database
-                    String user_email = userEmail.getText().toString().trim();
-                    String user_password = userPassword.getText().toString().trim();
+                    final String authMail = email.getText().toString().trim();
+                    final String authPassword = password.getText().toString().trim();
 
-                    firebaseAuth.createUserWithEmailAndPassword(user_email, user_password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    firebaseAuth.createUserWithEmailAndPassword(authMail, authPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if(task.isSuccessful()) {
-                                Toast.makeText(RegistrationActivity.this, "Registration Succesful", Toast.LENGTH_SHORT).show();
+                        public final void onComplete(final @NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(RegistrationActivity.this, "Registration Succesfull", Toast.LENGTH_SHORT).show();
                                 startActivity(new Intent(RegistrationActivity.this, MainActivity.class));
-                            }else{
-                                Toast.makeText(RegistrationActivity.this, "Registration Failed", Toast.LENGTH_SHORT).show();
+                                return;
                             }
+
+                            Toast.makeText(RegistrationActivity.this, "Registration Failed", Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
             }
         });
 
-        userLogin.setOnClickListener(new View.OnClickListener(){
+        this.userLogin.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public final void onClick(final View view) {
                 startActivity(new Intent(RegistrationActivity.this, MainActivity.class));
             }
         });
     }
 
-    private void setupUIViews () {
-        userName = (EditText) findViewById(R.id.etUserName);
-        userPassword = (EditText) findViewById(R.id.etUserPassword);
-        userEmail = (EditText) findViewById(R.id.etUserEmail);
-        regButton = (Button) findViewById(R.id.btnRegister);
-        userLogin = (TextView) findViewById(R.id.tvUserLogin);
-    }
+    /** Checks if all data is entered */
+    private final boolean validate() {
+        final String name = this.name.getText().toString();
+        final String password = this.password.getText().toString();
+        final String email = this.email.getText().toString();
 
-    private Boolean validate() {
-        Boolean result = false;
-
-        String name = userName.getText().toString();
-        String password = userPassword.getText().toString();
-        String email = userEmail.getText().toString();
-
-        if(name.isEmpty() || password.isEmpty() || email.isEmpty()) {
+        if (name.isEmpty() || password.isEmpty() || email.isEmpty()) {
             Toast.makeText(this, "please enter all the details", Toast.LENGTH_LONG).show();
-        }else {
-            result = true;
+            return false;
         }
-        return result;
+
+        return true;
     }
 }
