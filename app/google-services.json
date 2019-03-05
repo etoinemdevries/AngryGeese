@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "999298336635",
+    "firebase_url": "https://angrygeese-4d14a.firebaseio.com",
+    "project_id": "angrygeese-4d14a",
+    "storage_bucket": "angrygeese-4d14a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:999298336635:android:852ff426914ae5a2",
+        "android_client_info": {
+          "package_name": "com.example.logindemo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "999298336635-eqf5ksqfkt3bjljpp2kf7hvnjk53k9jl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBm9R0zY1DUnp__xz67hhX7hEXRV7UsCUE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
