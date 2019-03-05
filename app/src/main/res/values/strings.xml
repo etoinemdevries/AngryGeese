@@ -1,8 +1,16 @@
 <resources>
     <string name="app_name">Angry Geese</string>
-    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_maps">Angry Geese</string>
     <string name="hectare">Aantal ha: </string>
     <string name="total_cm">Totaal aantal cm: </string>
     <string name="dg_price">Prijs per kg drogestof: </string>
+
+    <string name="not_registered">Niet geregistreerd?</string>
+    <string name="email">E-mail</string>
+    <string name="username">Gebruikersnaam</string>
+    <string name="password">Wachtwoord</string>
+
     <string name="submit_button"><b>Verzenden</b></string>
+    <string name="login_button">Log in</string>
+    <string name="register_button">Registreer</string>
 </resources>
