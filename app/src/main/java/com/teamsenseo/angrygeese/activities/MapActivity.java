@@ -12,6 +12,8 @@ import com.teamsenseo.angrygeese.R;
 
 /**
  * Map activity
+ *
+ * @author Robert
  */
 public final class MapActivity extends FragmentActivity implements OnMapReadyCallback {
 
