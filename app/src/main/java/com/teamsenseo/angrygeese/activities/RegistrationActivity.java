@@ -72,7 +72,9 @@ public final class RegistrationActivity extends AppCompatActivity {
         });
     }
 
-    /** Checks if all data is entered */
+    /**
+     * Checks if all data is entered
+     */
     private final boolean validate() {
         final String name = this.name.getText().toString();
         final String password = this.password.getText().toString();

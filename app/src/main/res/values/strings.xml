@@ -4,7 +4,8 @@
     <string name="total_cm">Totaal aantal cm: </string>
     <string name="dg_price">Prijs per kg drogestof: </string>
 
-    <string name="not_registered">Niet geregristeerd?</string>
+    <string name="not_registered">Niet geregistreerd?</string>
+    <string name="email">E-mail</string>
     <string name="username">Gebruikersnaam</string>
     <string name="password">Wachtwoord</string>
 

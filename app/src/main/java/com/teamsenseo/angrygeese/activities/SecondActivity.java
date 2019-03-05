@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+
 import com.teamsenseo.angrygeese.R;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -31,12 +32,14 @@ public final class SecondActivity extends AppCompatActivity {
         this.logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               Logout();
+                Logout();
             }
         });
     }
 
-    /** Log the user out */
+    /**
+     * Log the user out
+     */
     private final void Logout() {
         this.firebaseAuth.signOut();
         finish();
@@ -44,20 +47,20 @@ public final class SecondActivity extends AppCompatActivity {
         startActivity(new Intent(SecondActivity.this, MainActivity.class));
     }
 
-     @Override
-     public final boolean onCreateOptionsMenu(final Menu menu) {
+    @Override
+    public final boolean onCreateOptionsMenu(final Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
         return true;
-     }
+    }
 
-     @Override
-     public final boolean onOptionsItemSelected(final MenuItem item) {
-        switch(item.getItemId()) {
+    @Override
+    public final boolean onOptionsItemSelected(final MenuItem item) {
+        switch (item.getItemId()) {
             case R.id.logoutMenu:
                 Logout();
                 break;
         }
 
         return true;
-     }
+    }
 }

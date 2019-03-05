@@ -68,9 +68,11 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    /** Attempts to log in */
+    /**
+     * Attempts to log in
+     */
     private final void validate(final String name, final String password) {
-        progressDialog.setMessage("ProgressDialog");
+        progressDialog.setMessage("Logging in");
         progressDialog.show();
 
         firebaseAuth.signInWithEmailAndPassword(name, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
