@@ -23,7 +23,7 @@ import com.teamsenseo.angrygeese.R;
  *
  * @author Gago
  */
-public class MainActivity extends AppCompatActivity {
+public final class MainActivity extends AppCompatActivity {
     private TextView info, userRegistration;
     private ProgressDialog progressDialog;
     private FirebaseAuth firebaseAuth;
