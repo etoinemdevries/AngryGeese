@@ -34,7 +34,7 @@ public final class FileUtils {
             reader.close();
             return builder.toString();
         } catch (final Exception e) {
-            AngryGeese.log("Failed to read from file: " + e.getMessage());
+            System.out.println("Failed to read from file: " + e.getMessage());
             e.printStackTrace();
         }
 
@@ -42,7 +42,7 @@ public final class FileUtils {
             try {
                 reader.close();
             } catch (final Exception e) {
-                AngryGeese.log("Failed to close file reader: " + e.getMessage());
+                System.out.println("Failed to close file reader: " + e.getMessage());
             }
         }
 
@@ -70,7 +70,7 @@ public final class FileUtils {
             writer.close();
             return true;
         } catch (final Exception e) {
-            AngryGeese.log("Failed to write to file: " + e.getMessage());
+            System.out.println("Failed to write to file: " + e.getMessage());
             e.printStackTrace();
         }
 
@@ -79,7 +79,7 @@ public final class FileUtils {
                 writer.flush();
                 writer.close();
             } catch (final Exception e) {
-                AngryGeese.log("Failed to close file writer: " + e.getMessage());
+                System.out.println("Failed to close file writer: " + e.getMessage());
             }
         }
 

@@ -26,15 +26,8 @@ public final class AngryGeese {
     public final GoogleMap map;
 
     public AngryGeese(final Application app, final GoogleMap map) {
-        log("Initializing");
+        System.out.println("Initializing");
         this.app = app;
         this.map = map;
-    }
-
-    /**
-     * Logs a message to console
-     */
-    public static final void log(final String msg) {
-        System.out.println("[Angry Geese] " + msg);
     }
 }
