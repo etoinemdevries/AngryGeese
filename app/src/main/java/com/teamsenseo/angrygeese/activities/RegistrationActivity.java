@@ -81,7 +81,7 @@ public final class RegistrationActivity extends AppCompatActivity {
         final String email = this.email.getText().toString();
 
         if (name.isEmpty() || password.isEmpty() || email.isEmpty()) {
-            Toast.makeText(this, "please enter all the details", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "please enter all credentials", Toast.LENGTH_LONG).show();
             return false;
         }
 
