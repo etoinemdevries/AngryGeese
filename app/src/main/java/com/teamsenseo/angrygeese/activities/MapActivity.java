@@ -32,5 +32,6 @@ public final class MapActivity extends FragmentActivity implements OnMapReadyCal
     @Override
     public final void onMapReady(final GoogleMap map) {
         AngryGeese.instance = new AngryGeese(getApplication(), map);
+        map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
     }
 }
