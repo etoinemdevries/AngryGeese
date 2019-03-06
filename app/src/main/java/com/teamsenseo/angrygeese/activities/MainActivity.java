@@ -71,7 +71,7 @@ public final class MainActivity extends AppCompatActivity {
      * Attempts to log in
      */
     private final void validate(final String name, final String password) {
-        if(name.isEmpty() || password.isEmpty()) {
+        if (name.isEmpty() || password.isEmpty()) {
             Toast.makeText(MainActivity.this, "Cannot log in with empty username and/or password", Toast.LENGTH_LONG).show();
             System.out.println("Attempted to sign in with empty username and/or password");
             return;
