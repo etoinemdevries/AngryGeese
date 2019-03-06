@@ -19,7 +19,7 @@ public final class FileUtils {
     }
 
     /**
-     * Reads the specified file
+     * Reads from the specified file
      */
     public final String read() {
         FileReader reader = null;
@@ -94,7 +94,7 @@ public final class FileUtils {
     }
 
     /**
-     * Reads a file
+     * Reads from a file
      */
     public static final String read(final File f) {
         return new FileUtils(f).read();
