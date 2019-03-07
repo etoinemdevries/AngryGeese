@@ -2,6 +2,7 @@ package com.teamsenseo.angrygeese.activities;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 
@@ -11,8 +12,13 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Polygon;
 import com.google.android.gms.maps.model.PolygonOptions;
-import com.teamsenseo.angrygeese.AngryGeese;
 import com.teamsenseo.angrygeese.R;
+import com.teamsenseo.angrygeese.utils.FileUtils;
+
+import org.xmlpull.v1.XmlPullParser;
+
+import java.io.File;
+import java.util.ArrayList;
 
 /**
  * Map activity
@@ -20,6 +26,7 @@ import com.teamsenseo.angrygeese.R;
  * @author Robert
  */
 public final class MapActivity extends FragmentActivity implements OnMapReadyCallback {
+    private GoogleMap map;
 
     @Override
     protected final void onCreate(final @Nullable Bundle bundle) {
@@ -35,20 +42,35 @@ public final class MapActivity extends FragmentActivity implements OnMapReadyCal
      */
     @Override
     public final void onMapReady(final GoogleMap map) {
-        AngryGeese.instance = new AngryGeese(getApplication(), map);
         map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
 
-        final PolygonOptions options = new PolygonOptions();
-        options.add(new LatLng(52.532327431071, 4.9698428582864),
-                new LatLng(52.5363890459246, 4.97152173643456),
-                new LatLng(52.5359060240486, 4.96928150387894),
-                new LatLng(52.5334104595542, 4.96744278341884),
-                new LatLng(52.5314914623206, 4.96633040367443),
-                new LatLng(52.5319261071537, 4.96651718547247),
-                new LatLng(52.5321208961933, 4.96596108874737),
-                new LatLng(52.532327431071, 4.96596108874737));
+        for(final File f : new File(Environment.DIRECTORY_DOWNLOADS).listFiles())
+            System.out.println(f.getAbsolutePath());
 
-        options.fillColor(Color.GREEN);
-        final Polygon polygon = map.addPolygon(options);
+        final File f = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "opdracht.kml");
+        load(f);
+    }
+
+    /**
+     * Loads a KML file
+     */
+    public final boolean load(final File f) {
+        if (f == null || !f.exists() || !f.getName().endsWith(".kml")) {
+            System.out.println("\nInvalid file: " + f.exists());
+            return false;
+        }
+
+        final FileUtils utils = new FileUtils(f);
+        final String lines[] = utils.read().replace("   ", "").split("\n");
+
+        final ArrayList<LatLng> positions = new ArrayList<>();
+        for (final String s : lines) {
+            System.out.println("Line: " + s);
+        }
+
+        final Polygon polygon = map.addPolygon(new PolygonOptions().addAll(positions));
+        polygon.setStrokeColor(Color.GREEN);
+        polygon.setStrokeWidth(0.6F);
+        return true;
     }
 }

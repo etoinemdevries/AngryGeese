@@ -1,7 +1,5 @@
 package com.teamsenseo.angrygeese.utils;
 
-import com.teamsenseo.angrygeese.AngryGeese;
-
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
