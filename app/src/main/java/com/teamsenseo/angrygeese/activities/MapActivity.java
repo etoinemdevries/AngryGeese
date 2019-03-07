@@ -13,6 +13,9 @@ import com.google.android.gms.maps.model.Polygon;
 import com.google.android.gms.maps.model.PolygonOptions;
 import com.teamsenseo.angrygeese.AngryGeese;
 import com.teamsenseo.angrygeese.R;
+import com.teamsenseo.angrygeese.utils.FileUtils;
+
+import java.io.File;
 
 /**
  * Map activity
@@ -46,9 +49,11 @@ public final class MapActivity extends FragmentActivity implements OnMapReadyCal
                 new LatLng(52.5314914623206, 4.96633040367443),
                 new LatLng(52.5319261071537, 4.96651718547247),
                 new LatLng(52.5321208961933, 4.96596108874737),
-                new LatLng(52.532327431071, 4.96596108874737));
-
+                new LatLng(52.532327431071, 4.9698428582864));
         options.fillColor(Color.GREEN);
         final Polygon polygon = map.addPolygon(options);
+
+        final FileUtils utils = new FileUtils(new File("..\\..\\..\\res\\raw\\coordinates.txt"));
+        System.out.println(utils.read());
     }
 }
