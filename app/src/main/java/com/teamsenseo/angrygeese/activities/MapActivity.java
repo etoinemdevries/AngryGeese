@@ -47,8 +47,7 @@ public final class MapActivity extends FragmentActivity implements OnMapReadyCal
 //                new LatLng(52.5314914623206, 4.96633040367443),
 //                new LatLng(52.5319261071537, 4.96651718547247),
 //                new LatLng(52.5321208961933, 4.96596108874737),
-//                new LatLng(52.532327431071, 4.9698428582864));
-//        options.fillColor(Color.GREEN);
+//                new LatLng(52.532327431071, 4.9698428582864))
         options.fillColor(Color.GREEN);
 
 
