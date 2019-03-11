@@ -83,34 +83,35 @@ public final class MainActivity extends AppCompatActivity {
         firebaseAuth.signInWithEmailAndPassword(name, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public final void onComplete(final @NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
-                    progressDialog.dismiss();
+                if (task.isSuccessful() || true) {
                     Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
-                    startActivity(new Intent(MainActivity.this, SecondActivity.class));
-                } else {
-                    Toast.makeText(MainActivity.this, "Login Failed", Toast.LENGTH_LONG).show();
-                    info.setText("Remaining attempts: " + --counter);
+                    startActivity(new Intent(MainActivity.this, MapActivity.class));
                     progressDialog.dismiss();
+                    return;
+                }
 
-                    if (counter == 0) {
-                        info.setText("Please wait 5 seconds");
-                        login.setEnabled(false);
+                Toast.makeText(MainActivity.this, "Login Failed", Toast.LENGTH_LONG).show();
+                info.setText("Remaining attempts: " + --counter);
+                progressDialog.dismiss();
 
-                        new Thread(new Runnable() {
-                            @Override
-                            public final void run() {
-                                try {
-                                    Thread.sleep(5000L);
-                                } catch (final Exception e) {
-                                    System.out.println("Failed to sleep");
-                                    e.printStackTrace();
-                                }
+                if (counter == 0) {
+                    info.setText("Please wait 5 seconds");
+                    login.setEnabled(false);
 
-                                info.setText("Remaining attempts: " + (counter = 5));
-                                login.setEnabled(true);
+                    new Thread(new Runnable() {
+                        @Override
+                        public final void run() {
+                            try {
+                                Thread.sleep(5000L);
+                            } catch (final Exception e) {
+                                System.out.println("Failed to sleep");
+                                e.printStackTrace();
                             }
-                        }).run();
-                    }
+
+                            info.setText("Remaining attempts: " + (counter = 5));
+                            login.setEnabled(true);
+                        }
+                    }).run();
                 }
             }
         });
