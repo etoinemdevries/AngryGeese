@@ -84,17 +84,17 @@ public final class MainActivity extends AppCompatActivity {
             @Override
             public final void onComplete(final @NonNull Task<AuthResult> task) {
                 if (task.isSuccessful() || true) {
-                    Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(MainActivity.this, MapActivity.class));
                     progressDialog.dismiss();
                     return;
                 }
 
-                Toast.makeText(MainActivity.this, "Login Failed", Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
                 info.setText("Remaining attempts: " + --counter);
                 progressDialog.dismiss();
 
-                if (counter == 0) {
+                if (counter <= 0) {
                     info.setText("Please wait 5 seconds");
                     login.setEnabled(false);
 
