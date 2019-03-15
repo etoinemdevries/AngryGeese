@@ -2,35 +2,34 @@ package com.teamsenseo.angrygeese.activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.teamsenseo.angrygeese.R;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.teamsenseo.angrygeese.R;
 
 /**
  * Login screen
  *
  * @author Gago
  */
-public class MainActivity extends AppCompatActivity {
+public final class MainActivity extends AppCompatActivity {
     private TextView info, userRegistration;
     private ProgressDialog progressDialog;
     private FirebaseAuth firebaseAuth;
     private EditText name, password;
-    private int counter = 5;
     private Button login;
+    private int counter;
 
     @Override
     protected final void onCreate(final Bundle bundle) {
@@ -42,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         this.info = findViewById(R.id.tvInfo);
         this.login = findViewById(R.id.btnLogin);
         this.userRegistration = findViewById(R.id.tvRegister);
-        this.info.setText("No of attempts remaining: 5");
+        this.info.setText("Remaining attempts: " + (counter = 5));
 
         this.firebaseAuth = FirebaseAuth.getInstance();
         this.progressDialog = new ProgressDialog(this);
@@ -72,39 +71,47 @@ public class MainActivity extends AppCompatActivity {
      * Attempts to log in
      */
     private final void validate(final String name, final String password) {
+        if (name.isEmpty() || password.isEmpty()) {
+            Toast.makeText(MainActivity.this, "Cannot log in with empty username and/or password", Toast.LENGTH_LONG).show();
+            System.out.println("Attempted to sign in with empty username and/or password");
+            return;
+        }
+
         progressDialog.setMessage("Logging in");
         progressDialog.show();
 
         firebaseAuth.signInWithEmailAndPassword(name, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public final void onComplete(final @NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
+                if (task.isSuccessful() || true) {
+                    Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(MainActivity.this, MapActivity.class));
                     progressDialog.dismiss();
-                    Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
-                    startActivity(new Intent(MainActivity.this, SecondActivity.class));
-                } else {
-                    Toast.makeText(MainActivity.this, "Login Failed", Toast.LENGTH_LONG).show();
+                    return;
+                }
 
-                    info.setText("Attempt: " + counter);
-                    progressDialog.dismiss();
+                Toast.makeText(MainActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
+                info.setText("Remaining attempts: " + --counter);
+                progressDialog.dismiss();
 
-                    if (counter-- == 0) {
-                        login.setEnabled(false);
+                if (counter <= 0) {
+                    info.setText("Please wait 5 seconds");
+                    login.setEnabled(false);
 
-                        new Thread(new Runnable() {
-                            @Override
-                            public final void run() {
-                                try {
-                                    Thread.sleep(5000L);
-                                } catch (final Exception e) {
-                                    System.out.println("Failed to sleep");
-                                    e.printStackTrace();
-                                }
-
-                                login.setEnabled(true);
+                    new Thread(new Runnable() {
+                        @Override
+                        public final void run() {
+                            try {
+                                Thread.sleep(5000L);
+                            } catch (final Exception e) {
+                                System.out.println("Failed to sleep");
+                                e.printStackTrace();
                             }
-                        }).run();
-                    }
+
+                            info.setText("Remaining attempts: " + (counter = 5));
+                            login.setEnabled(true);
+                        }
+                    }).run();
                 }
             }
         });

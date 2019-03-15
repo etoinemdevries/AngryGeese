@@ -52,7 +52,7 @@ public final class RegistrationActivity extends AppCompatActivity {
                         @Override
                         public final void onComplete(final @NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                Toast.makeText(RegistrationActivity.this, "Registration Succesfull", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RegistrationActivity.this, "Registered successfully", Toast.LENGTH_SHORT).show();
                                 startActivity(new Intent(RegistrationActivity.this, MainActivity.class));
                                 return;
                             }
@@ -81,7 +81,7 @@ public final class RegistrationActivity extends AppCompatActivity {
         final String email = this.email.getText().toString();
 
         if (name.isEmpty() || password.isEmpty() || email.isEmpty()) {
-            Toast.makeText(this, "please enter all the details", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "please enter all credentials", Toast.LENGTH_LONG).show();
             return false;
         }
 
