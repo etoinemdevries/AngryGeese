@@ -36,7 +36,7 @@ public final class MainActivity extends AppCompatActivity {
         super.onCreate(bundle);
         setContentView(R.layout.activity_main);
 
-        this.name = findViewById(R.id.etName);
+        this.name =  findViewById(R.id.etName);
         this.password = findViewById(R.id.etPassword);
         this.info = findViewById(R.id.tvInfo);
         this.login = findViewById(R.id.btnLogin);
