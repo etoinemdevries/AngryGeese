@@ -1,7 +1,5 @@
 package com.teamsenseo.angrygeese.utils;
 
-import com.teamsenseo.angrygeese.AngryGeese;
-
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -19,7 +17,7 @@ public final class FileUtils {
     }
 
     /**
-     * Reads the specified file
+     * Reads from the specified file
      */
     public final String read() {
         FileReader reader = null;
@@ -34,7 +32,7 @@ public final class FileUtils {
             reader.close();
             return builder.toString();
         } catch (final Exception e) {
-            AngryGeese.log("Failed to read from file: " + e.getMessage());
+            System.out.println("Failed to read from file: " + e.getMessage());
             e.printStackTrace();
         }
 
@@ -42,7 +40,7 @@ public final class FileUtils {
             try {
                 reader.close();
             } catch (final Exception e) {
-                AngryGeese.log("Failed to close file reader: " + e.getMessage());
+                System.out.println("Failed to close file reader: " + e.getMessage());
             }
         }
 
@@ -70,7 +68,7 @@ public final class FileUtils {
             writer.close();
             return true;
         } catch (final Exception e) {
-            AngryGeese.log("Failed to write to file: " + e.getMessage());
+            System.out.println("Failed to write to file: " + e.getMessage());
             e.printStackTrace();
         }
 
@@ -79,7 +77,7 @@ public final class FileUtils {
                 writer.flush();
                 writer.close();
             } catch (final Exception e) {
-                AngryGeese.log("Failed to close file writer: " + e.getMessage());
+                System.out.println("Failed to close file writer: " + e.getMessage());
             }
         }
 
@@ -94,7 +92,7 @@ public final class FileUtils {
     }
 
     /**
-     * Reads a file
+     * Reads from a file
      */
     public static final String read(final File f) {
         return new FileUtils(f).read();

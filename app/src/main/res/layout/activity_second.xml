@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SecondActivity"
-    android:background="#123456">
+    android:background="#123456"
+    tools:context="com.teamsenseo.angrygeese.activities.SecondActivity">
 
     <ImageView
         android:layout_width="wrap_content"
