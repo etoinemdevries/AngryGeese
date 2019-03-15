@@ -13,6 +13,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Polygon;
 import com.google.android.gms.maps.model.PolygonOptions;
+import com.google.maps.android.PolyUtil;
 import com.teamsenseo.angrygeese.R;
 
 import java.util.ArrayList;
@@ -23,6 +24,8 @@ import java.util.ArrayList;
  * @author Robert
  */
 public final class MapActivity extends FragmentActivity implements OnMapReadyCallback {
+    private GoogleMap map;
+    private final ArrayList<Polygon> polygons = new ArrayList<>();
 
     @Override
     protected final void onCreate(final @Nullable Bundle bundle) {
@@ -38,7 +41,8 @@ public final class MapActivity extends FragmentActivity implements OnMapReadyCal
      */
     @Override
     public final void onMapReady(final GoogleMap map) {
-        map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+        this.map = map;
+        this.map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
         final ArrayList<LatLng> lats = new ArrayList<>();
 
         /* Hardcoded locs */
@@ -56,14 +60,14 @@ public final class MapActivity extends FragmentActivity implements OnMapReadyCal
         lats.add(new LatLng(52.7511461789121, 6.12571087666791));
 
         /* Draw field polygon */
-        final Polygon polygon = map.addPolygon(new PolygonOptions().addAll(lats));
+        final Polygon polygon = this.map.addPolygon(new PolygonOptions().addAll(lats));
         polygon.setFillColor(Color.argb(120, 65, 100, 65));
         polygon.setStrokeColor(Color.GREEN);
         polygon.setStrokeWidth(0.7F);
 
         /* Set zoom preferences */
-        map.setMaxZoomPreference(19);
-        map.setMinZoomPreference(16);
+        this.map.setMaxZoomPreference(19);
+        this.map.setMinZoomPreference(16);
 
         if (!lats.isEmpty()) {
             /* Map bounds */
@@ -74,39 +78,70 @@ public final class MapActivity extends FragmentActivity implements OnMapReadyCal
             map.moveCamera(CameraUpdateFactory.newLatLng(lats.get(0)));
 
             /* Draw grid over field */
-            drawGrid(map, bounds);
+            final long start = System.currentTimeMillis();
+            System.out.println("Creating & drawing grid");
+            doGrid(lats, bounds[0], bounds[1]);
+            System.out.println("Took " + (System.currentTimeMillis() - start) + "ms to create & draw grid");
         }
     }
 
-    /* Draw grid over map */
-    private final void drawGrid(final GoogleMap map, final double[] bounds) {
-        final ArrayList<LatLng> gridLats = new ArrayList<>();
-        final double longitude = 0.0001424542009743867;
-        final double latitude = 0.00008988925643607076;
+    /* Create & draw grid */
+    private final void doGrid(final ArrayList<LatLng> latlngs, final double startX, final double startY) {
+        /* 10 Meter */
+        final double lon = 0.0001424542009743867;
+        final double lat = 0.00008988925643607076;
 
-        for (int y = 0; y < 100; y++) {
-            for (int x = 0; x < 100; x++) {
-                gridLats.add(new LatLng(bounds[1] + latitude * y, bounds[0] + longitude * x));
-                gridLats.add(new LatLng(bounds[1] + latitude * (y + 1), bounds[0] + longitude * x));
-                gridLats.add(new LatLng(bounds[1] + latitude * (y + 1), bounds[0] + longitude * (x + 1)));
-                gridLats.add(new LatLng(bounds[1] + latitude * y, bounds[0] + longitude * (x + 1)));
+        /* Positions */
+        final double posX = startX - (lon * 50);
+        final double posY = startY - (lat * 50);
+
+        /* Grid */
+        final ArrayList<LatLng> grid = new ArrayList<>();
+        int x = 0;
+
+        for (int y = 0; y < 1000; ++x) {
+            final ArrayList<LatLng> lats = new ArrayList<>();
+            lats.add(new LatLng(posY + lat * y, posX + lon * x));
+            lats.add(new LatLng(posY + lat * (y + 1), posX + lon * x));
+            lats.add(new LatLng(posY + lat * (y + 1), posX + lon * (x + 1)));
+            lats.add(new LatLng(posY + lat * y, posX + lon * (x + 1)));
+            boolean flag = false;
+
+            for (final LatLng latLng : lats) {
+                if (PolyUtil.containsLocation(latLng, latlngs, false)) continue;
+                flag = true;
+                break;
             }
+
+            if (flag) {
+                if (x < 1000) continue;
+                x = 0;
+                y++;
+
+                continue;
+            }
+
+            grid.addAll(lats);
+
+            if (x < 1000) continue;
+            x = 0;
+            y++;
         }
 
-        System.out.println("Added " + gridLats.size() + " points");
+        /* Draw all boxes */
         final ArrayList<LatLng> points = new ArrayList<>();
 
-        for (final LatLng point : gridLats) {
+        for (final LatLng point : grid) {
             points.add(point);
-            if (points.size() < 3) continue;
+            if (points.size() <= 3) continue;
 
-            final Polygon polygon = map.addPolygon(new PolygonOptions().addAll(points));
-            polygon.setStrokeColor(Color.RED);
-            polygon.setStrokeWidth(0.7F);
+            final PolygonOptions box = new PolygonOptions();
+            box.strokeWidth(2f);
+            box.addAll(points);
+
+            this.polygons.add(this.map.addPolygon(box));
             points.clear();
         }
-
-        System.out.println("Finished!");
     }
 
     private final LatLng getTop(final ArrayList<LatLng> lats) {
