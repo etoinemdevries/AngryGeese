@@ -13,7 +13,7 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.teamsenseo.angrygeese.Field;
+import com.teamsenseo.angrygeese.utils.Field;
 import com.teamsenseo.angrygeese.R;
 
 public final class SecondActivity extends AppCompatActivity {

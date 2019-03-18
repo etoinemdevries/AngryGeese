@@ -43,6 +43,7 @@ public final class MapActivity extends FragmentActivity implements OnMapReadyCal
     public final void onMapReady(final GoogleMap map) {
         this.map = map;
         this.map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+        this.map.setOnPolygonClickListener(this);
         final ArrayList<LatLng> lats = new ArrayList<>();
 
         /* Hardcoded points */
@@ -87,8 +88,8 @@ public final class MapActivity extends FragmentActivity implements OnMapReadyCal
 
     @Override
     public final void onPolygonClick(final Polygon polygon) {
-        switch(polygon.getFillColor()) {
-            case Color.WHITE:
+        switch (polygon.getFillColor()) {
+            case Color.TRANSPARENT:
                 polygon.setFillColor(Color.GREEN);
                 break;
 
@@ -101,9 +102,11 @@ public final class MapActivity extends FragmentActivity implements OnMapReadyCal
                 break;
 
             case Color.RED:
-                polygon.setFillColor(Color.WHITE);
+                polygon.setFillColor(Color.TRANSPARENT);
                 break;
         }
+
+        System.out.println("Polygon clicked! woah");
     }
 
     /* Create & draw grid */
@@ -158,7 +161,7 @@ public final class MapActivity extends FragmentActivity implements OnMapReadyCal
             if (points.size() <= 3) continue;
 
             final PolygonOptions box = new PolygonOptions();
-            box.fillColor(Color.WHITE);
+            box.fillColor(Color.TRANSPARENT);
             box.clickable(true);
             box.strokeWidth(2F);
             box.addAll(points);
