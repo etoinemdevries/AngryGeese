@@ -114,16 +114,17 @@ public final class MapActivity extends FragmentActivity implements OnMapReadyCal
             }
 
             if (flag) {
-                if (x < 1000) continue;
-                x = 0;
-                y++;
+                if (x >= 1000) {
+                    x = 0;
+                    y++;
+                }
 
                 continue;
             }
 
             grid.addAll(lats);
-
             if (x < 1000) continue;
+
             x = 0;
             y++;
         }
