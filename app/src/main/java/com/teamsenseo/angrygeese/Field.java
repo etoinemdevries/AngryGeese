@@ -1,29 +1,25 @@
 package com.teamsenseo.angrygeese;
 
-public class Field {
-    private String veldID;
-    private String perceelNaam;
-    private String VeldSchade;
+public final class Field {
+    private final String veldID;
+    private final String perceelNaam;
+    private final String veldSchade;
 
-    public Field() {
-
-    }
-
-    public Field(String veldID, String perceelNaam, String veldSchade) {
+    public Field(final String veldID, final String perceelNaam, final String veldSchade) {
         this.veldID = veldID;
         this.perceelNaam = perceelNaam;
-        VeldSchade = veldSchade;
+        this.veldSchade = veldSchade;
     }
 
     public String getveldID() {
-        return veldID;
+        return this.veldID;
     }
 
     public String getperceelNaam() {
-        return perceelNaam;
+        return this.perceelNaam;
     }
 
-    public String getVeldSchade() {
-        return VeldSchade;
+    public String getveldSchade() {
+        return this.veldSchade;
     }
 }

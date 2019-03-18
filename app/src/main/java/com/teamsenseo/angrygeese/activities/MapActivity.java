@@ -87,7 +87,23 @@ public final class MapActivity extends FragmentActivity implements OnMapReadyCal
 
     @Override
     public final void onPolygonClick(final Polygon polygon) {
+        switch(polygon.getFillColor()) {
+            case Color.WHITE:
+                polygon.setFillColor(Color.GREEN);
+                break;
 
+            case Color.GREEN:
+                polygon.setFillColor(Color.YELLOW);
+                break;
+
+            case Color.YELLOW:
+                polygon.setFillColor(Color.RED);
+                break;
+
+            case Color.RED:
+                polygon.setFillColor(Color.WHITE);
+                break;
+        }
     }
 
     /* Create & draw grid */
@@ -142,6 +158,7 @@ public final class MapActivity extends FragmentActivity implements OnMapReadyCal
             if (points.size() <= 3) continue;
 
             final PolygonOptions box = new PolygonOptions();
+            box.fillColor(Color.WHITE);
             box.clickable(true);
             box.strokeWidth(2F);
             box.addAll(points);
