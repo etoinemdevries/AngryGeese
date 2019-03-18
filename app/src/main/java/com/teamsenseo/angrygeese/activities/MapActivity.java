@@ -23,7 +23,7 @@ import java.util.ArrayList;
  *
  * @author Robert
  */
-public final class MapActivity extends FragmentActivity implements OnMapReadyCallback {
+public final class MapActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnPolygonClickListener {
     private GoogleMap map;
     private final ArrayList<Polygon> polygons = new ArrayList<>();
 
@@ -45,7 +45,7 @@ public final class MapActivity extends FragmentActivity implements OnMapReadyCal
         this.map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
         final ArrayList<LatLng> lats = new ArrayList<>();
 
-        /* Hardcoded locs */
+        /* Hardcoded points */
         lats.add(new LatLng(52.7511461789121, 6.12571087666791));
         lats.add(new LatLng(52.7517247464209, 6.12863553192948));
         lats.add(new LatLng(52.7508871402523, 6.12921381476182));
@@ -83,6 +83,11 @@ public final class MapActivity extends FragmentActivity implements OnMapReadyCal
             doGrid(lats, bounds[0], bounds[1]);
             System.out.println("Took " + (System.currentTimeMillis() - start) + "ms to create & draw grid");
         }
+    }
+
+    @Override
+    public final void onPolygonClick(final Polygon polygon) {
+
     }
 
     /* Create & draw grid */
@@ -137,12 +142,15 @@ public final class MapActivity extends FragmentActivity implements OnMapReadyCal
             if (points.size() <= 3) continue;
 
             final PolygonOptions box = new PolygonOptions();
-            box.strokeWidth(2f);
+            box.clickable(true);
+            box.strokeWidth(2F);
             box.addAll(points);
 
             this.polygons.add(this.map.addPolygon(box));
             points.clear();
         }
+
+        grid.clear();
     }
 
     private final LatLng getTop(final ArrayList<LatLng> lats) {

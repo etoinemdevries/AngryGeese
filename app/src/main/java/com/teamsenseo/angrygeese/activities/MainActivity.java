@@ -24,7 +24,7 @@ import com.teamsenseo.angrygeese.R;
  * @author Gago
  */
 public final class MainActivity extends AppCompatActivity {
-    private TextView info, userRegistration;
+    private TextView info;
     private ProgressDialog progressDialog;
     private FirebaseAuth firebaseAuth;
     private EditText name, password;
@@ -40,7 +40,6 @@ public final class MainActivity extends AppCompatActivity {
         this.password = findViewById(R.id.etPassword);
         this.info = findViewById(R.id.tvInfo);
         this.login = findViewById(R.id.btnLogin);
-        this.userRegistration = findViewById(R.id.tvRegister);
         this.info.setText("Remaining attempts: " + (counter = 5));
 
         this.firebaseAuth = FirebaseAuth.getInstance();
@@ -49,20 +48,14 @@ public final class MainActivity extends AppCompatActivity {
 
         if (user != null) {
             finish();
-            startActivity(new Intent(MainActivity.this, SecondActivity.class));
+            startActivity(new Intent(MainActivity.this, MapActivity.class));
+            return;
         }
 
         this.login.setOnClickListener(new View.OnClickListener() {
             @Override
             public final void onClick(final View view) {
                 validate(name.getText().toString(), password.getText().toString());
-            }
-        });
-
-        this.userRegistration.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public final void onClick(final View view) {
-                startActivity(new Intent(MainActivity.this, RegistrationActivity.class));
             }
         });
     }
